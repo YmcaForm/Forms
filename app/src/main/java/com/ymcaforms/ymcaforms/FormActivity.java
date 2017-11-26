@@ -11,6 +11,7 @@ import android.app.Activity;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
@@ -35,6 +36,7 @@ public class FormActivity extends Activity {
     DatabaseReference questionreference;
     private FirebaseAuth mAuth;
     int flag=0;
+    private Toolbar mToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +45,9 @@ public class FormActivity extends Activity {
 
         DatabaseHandler db = new DatabaseHandler(this);
         db.delete(getApplicationContext());
+
+        mToolbar = (Toolbar) findViewById(R.id.form_toolbar);
+
 
         mAuth = FirebaseAuth.getInstance();
 

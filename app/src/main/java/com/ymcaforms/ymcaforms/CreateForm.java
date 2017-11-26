@@ -195,16 +195,11 @@ public class CreateForm extends AppCompatActivity {
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         for (DataSnapshot snapshot: dataSnapshot.getChildren()) {
 
-                            String question="",type="",options="";
+                            String question,type,options;
                             count++;
 
-                            if(dataSnapshot.child("Question").getValue()!=null)
                             question=snapshot.child("Question").getValue().toString();
-
-                            if(dataSnapshot.child("Type").getValue()!=null)
                             type=snapshot.child("Type").getValue().toString();
-
-                            if(dataSnapshot.child("Options").getValue()!=null)
                             options=snapshot.child("Options").getValue().toString();
 
                             int c=0;
@@ -236,9 +231,10 @@ public class CreateForm extends AppCompatActivity {
                             if(type.equals("Text"))
                             {
                                 EditText ed=new EditText(getApplicationContext());
-                                layoutParams=new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                                layoutParams=new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                                 layoutParams.setMargins(0,20,0,0);
                                 ed.setLayoutParams(layoutParams);
+                                ed.setWidth(300);
                                 allEds.add(ed);
                                 ed.setHint("Your Answer");
                                 ed.setTextSize(TypedValue.COMPLEX_UNIT_SP,14f);

@@ -6,11 +6,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <include layout="@layout/app_bar_layout"
+        android:id="@+id/form_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
         android:id="@+id/relative1"
+        android:layout_below="@id/form_toolbar"
         >
 
         <EditText
