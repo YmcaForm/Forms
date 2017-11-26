@@ -51,72 +51,73 @@ import io.branch.referral.util.ShareSheetStyle;
  * Created by Kachucool on 25-11-2017.
  */
 
-public class User extends AppCompatActivity{
+public class User extends AppCompatActivity {
 
-    String userId,formId;
+    String userId, formId;
     FirebaseAuth mAuth;
     DatabaseReference mquestiondatabase;
     LinearLayout linearLayout;
-    DatabaseReference mformdatabase,mresponserefernce;
-    ArrayList<EditText> allEds=new ArrayList<>();
-    ArrayList<RadioGroup> allradiogroup=new ArrayList<>();
-    ArrayList<RadioButton> allradio=new ArrayList<>();
-    ArrayList<CheckBox> allcheck=new ArrayList<>();
-    ArrayList<Integer> radiocount=new ArrayList<>();
-    ArrayList<Integer> checkcount=new ArrayList<>();
+    DatabaseReference mformdatabase, mresponserefernce;
+    ArrayList<EditText> allEds = new ArrayList<>();
+    ArrayList<RadioGroup> allradiogroup = new ArrayList<>();
+    ArrayList<RadioButton> allradio = new ArrayList<>();
+    ArrayList<CheckBox> allcheck = new ArrayList<>();
+    ArrayList<Integer> radiocount = new ArrayList<>();
+    ArrayList<Integer> checkcount = new ArrayList<>();
     StorageReference mimagereference;
     TextView tv1;
     Button b;
     ImageView iv;
     CardView cd;
     TextView tv;
-    int count=0,question=0,text=0,radiogroup=0,radio=0,check=0,checkbox=0;
+    int count = 0, question = 0, text = 0, radiogroup = 0, radio = 0, check = 0, checkbox = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_form);
 
-        userId=getIntent().getStringExtra("user_id");
-        formId=getIntent().getStringExtra("form_id");
+        userId = getIntent().getStringExtra("user_id");
+        formId = getIntent().getStringExtra("form_id");
 
 
-        cd=(CardView)findViewById(R.id.create_cardview);
+        cd = (CardView) findViewById(R.id.create_cardview);
         final View rootView = getWindow().getDecorView().findViewById(android.R.id.content);
-        b=(Button)findViewById(R.id.create_button);
+        b = (Button) findViewById(R.id.create_button);
 
         final ViewGroup viewGroup = (ViewGroup) ((ViewGroup) this
                 .findViewById(android.R.id.content)).getChildAt(0);
 
-        mquestiondatabase= FirebaseDatabase.getInstance().getReference().child("Questions").child(formId);
-        linearLayout=(LinearLayout)findViewById(R.id.create_linear);
-        mformdatabase=FirebaseDatabase.getInstance().getReference().child("Forms").child(userId);
+        mquestiondatabase = FirebaseDatabase.getInstance().getReference().child("Questions").child(formId);
+        linearLayout = (LinearLayout) findViewById(R.id.create_linear);
+        mformdatabase = FirebaseDatabase.getInstance().getReference().child("Forms").child(userId);
 
-        mimagereference= FirebaseStorage.getInstance().getReference();
+        mimagereference = FirebaseStorage.getInstance().getReference();
         //iv=(ImageView)findViewById(R.id.ImageView);
 
-        mimagereference=FirebaseStorage.getInstance().getReference();
+        mimagereference = FirebaseStorage.getInstance().getReference();
         mformdatabase.child(formId).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                String form_name="",form_description="";
+                String form_name = "", form_description = "";
 
-                if(dataSnapshot.child("form_name").getValue()!=null)
-                form_name=dataSnapshot.child("form_name").getValue().toString();
+                if (dataSnapshot.child("form_name").getValue() != null)
+                    form_name = dataSnapshot.child("form_name").getValue().toString();
 
-                if(dataSnapshot.child("form_description").getValue()!=null)
-                form_description=dataSnapshot.child("form_description").getValue().toString();
+                if (dataSnapshot.child("form_description").getValue() != null)
+                    form_description = dataSnapshot.child("form_description").getValue().toString();
 
-                TextView textView= new TextView(getApplicationContext());
-                LinearLayout.LayoutParams layoutParams=new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                layoutParams.weight=1;
+                TextView textView = new TextView(getApplicationContext());
+                LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                layoutParams.weight = 1;
                 textView.setLayoutParams(layoutParams);
                 textView.setText(form_name);
                 textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 28f);
                 textView.setTextColor(getResources().getColor(R.color.black));
                 linearLayout.addView(textView);
 
-                TextView textView1= new TextView(getApplicationContext());
+                TextView textView1 = new TextView(getApplicationContext());
                 textView.setLayoutParams(layoutParams);
                 textView1.setText(form_description);
                 textView1.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16f);
@@ -126,73 +127,67 @@ public class User extends AppCompatActivity{
                 mquestiondatabase.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        for (DataSnapshot snapshot: dataSnapshot.getChildren()) {
+                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
 
-                            String question="",type="",options="";
+                            String question = "", type = "", options = "";
                             count++;
 
-                            if(dataSnapshot.child("Question").getValue()!=null)
-                            question=snapshot.child("Question").getValue().toString();
+                            if (dataSnapshot.child("Question").getValue() != null)
+                                question = snapshot.child("Question").getValue().toString();
 
-                            if(dataSnapshot.child("Type").getValue()!=null)
-                            type=snapshot.child("Type").getValue().toString();
+                            if (dataSnapshot.child("Type").getValue() != null)
+                                type = snapshot.child("Type").getValue().toString();
 
-                            if(dataSnapshot.child("Options").getValue()!=null)
-                            options=snapshot.child("Options").getValue().toString();
+                            if (dataSnapshot.child("Options").getValue() != null)
+                                options = snapshot.child("Options").getValue().toString();
 
-                            int c=0;
-                            String s="";
-                            ArrayList<String> option=new ArrayList<>();
-                            for(int j=0; j<options.length(); j++)
-                            {
-                                if(options.charAt(j)=='$' && options.charAt(j+1)=='$' && options.charAt(j+2)=='$')
-                                {
+                            int c = 0;
+                            String s = "";
+                            ArrayList<String> option = new ArrayList<>();
+                            for (int j = 0; j < options.length(); j++) {
+                                if (options.charAt(j) == '$' && options.charAt(j + 1) == '$' && options.charAt(j + 2) == '$') {
                                     c++;
                                     option.add(s);
-                                    j=j+2;
-                                    s="";
-                                }
-                                else
-                                    s=s+options.charAt(j);
+                                    j = j + 2;
+                                    s = "";
+                                } else
+                                    s = s + options.charAt(j);
                             }
 
-                            TextView textView=new TextView(getApplicationContext());
-                            RelativeLayout.LayoutParams layoutParams=new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                            layoutParams.setMargins(0,60,0,0);
+                            TextView textView = new TextView(getApplicationContext());
+                            RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                            layoutParams.setMargins(0, 60, 0, 0);
                             textView.setTextColor(getResources().getColor(R.color.black));
                             textView.setLayoutParams(layoutParams);
 
                             textView.setText(question);
-                            textView.setTextSize(TypedValue.COMPLEX_UNIT_SP,18f);
+                            textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18f);
                             linearLayout.addView(textView);
 
-                            if(type.equals("Text"))
-                            {
-                                EditText ed=new EditText(getApplicationContext());
-                                layoutParams=new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                                layoutParams.setMargins(0,20,0,0);
+                            if (type.equals("Text")) {
+                                EditText ed = new EditText(getApplicationContext());
+                                layoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                                layoutParams.setMargins(0, 20, 0, 0);
                                 ed.setLayoutParams(layoutParams);
                                 allEds.add(ed);
                                 ed.setHint("Your Answer");
-                                ed.setTextSize(TypedValue.COMPLEX_UNIT_SP,14f);
+                                ed.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14f);
                                 ed.setTextColor(getResources().getColor(R.color.black));
                                 linearLayout.addView(ed);
                             }
 
-                            if(type.equals("Radio Button"))
-                            {
-                                RadioGroup rg=new RadioGroup(getApplicationContext());
-                                layoutParams=new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                                layoutParams.setMargins(0,20,0,0);
+                            if (type.equals("Radio Button")) {
+                                RadioGroup rg = new RadioGroup(getApplicationContext());
+                                layoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                                layoutParams.setMargins(0, 20, 0, 0);
                                 rg.setLayoutParams(layoutParams);
                                 allradiogroup.add(rg);
 
 
-                                for(int i=0; i<option.size(); i++)
-                                {
-                                    RadioButton rb=new RadioButton(getApplicationContext());
-                                    layoutParams=new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                                    layoutParams.setMargins(0,15,0,0);
+                                for (int i = 0; i < option.size(); i++) {
+                                    RadioButton rb = new RadioButton(getApplicationContext());
+                                    layoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                                    layoutParams.setMargins(0, 15, 0, 0);
                                     rb.setLayoutParams(layoutParams);
                                     allradio.add(rb);
                                     rb.setText(option.get(i));
@@ -204,10 +199,8 @@ public class User extends AppCompatActivity{
                                 linearLayout.addView(rg);
                             }
 
-                            if(type.equals("Check Box"))
-                            {
-                                for(int i=0; i<option.size(); i++)
-                                {
+                            if (type.equals("Check Box")) {
+                                for (int i = 0; i < option.size(); i++) {
                                     CheckBox cb = new CheckBox(getApplicationContext());
                                     layoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                                     layoutParams.setMargins(0, 10, 0, 0);
@@ -245,70 +238,63 @@ public class User extends AppCompatActivity{
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
 
-                        mresponserefernce=FirebaseDatabase.getInstance().getReference().child("Responses").child(formId);
-                        String response_id=mresponserefernce.push().getKey();
+                        mresponserefernce = FirebaseDatabase.getInstance().getReference().child("Responses").child(formId);
+                        String response_id = mresponserefernce.push().getKey();
 
-                        for (DataSnapshot snapshot: dataSnapshot.getChildren()) {
+                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
 
-                            HashMap<String,String> hashMap=new HashMap<>();
-                            String questiion_id=snapshot.getKey();
+                            HashMap<String, String> hashMap = new HashMap<>();
+                            String questiion_id = snapshot.getKey();
                             System.out.println(questiion_id);
 
-                            String question="",type="";
-                            if(dataSnapshot.child("Question").getValue()!=null)
-                            question=snapshot.child("Question").getValue().toString();
+                            String question = "", type = "";
+                            if (dataSnapshot.child("Question").getValue() != null)
+                                question = snapshot.child("Question").getValue().toString();
 
-                            if(dataSnapshot.child("Type").getValue()!=null)
-                            type=snapshot.child("Type").getValue().toString();
+                            if (dataSnapshot.child("Type").getValue() != null)
+                                type = snapshot.child("Type").getValue().toString();
 
-                            String answer="";
+                            String answer = "";
 
-                            if(type.equals("Text"))
-                            {
-                                answer=allEds.get(text).getText().toString();
+                            if (type.equals("Text")) {
+                                answer = allEds.get(text).getText().toString();
                                 text++;
                             }
 
-                            if(type.equals("Radio Button"))
-                            {
-                                for(int i=radio; i<radio+radiocount.get(radiogroup); i++)
-                                {
-                                    if(allradio.get(i).isChecked())
-                                    {
-                                        answer=allradio.get(i).getText().toString();
+                            if (type.equals("Radio Button")) {
+                                for (int i = radio; i < radio + radiocount.get(radiogroup); i++) {
+                                    if (allradio.get(i).isChecked()) {
+                                        answer = allradio.get(i).getText().toString();
                                     }
                                 }
 
-                                radio+=radiocount.get(radiogroup);
+                                radio += radiocount.get(radiogroup);
                                 radiogroup++;
                             }
 
-                            if(type.equals("Check Box"))
-                            {
-                                for(int i=check; i<check+checkcount.get(checkbox); i++)
-                                {
-                                    if(allcheck.get(i).isChecked())
-                                    {
-                                        answer+=allcheck.get(i).getText().toString()+"$$$";
+                            if (type.equals("Check Box")) {
+                                for (int i = check; i < check + checkcount.get(checkbox); i++) {
+                                    if (allcheck.get(i).isChecked()) {
+                                        answer += allcheck.get(i).getText().toString() + "$$$";
                                     }
                                 }
 
-                                check+=checkcount.get(checkbox);
+                                check += checkcount.get(checkbox);
                                 checkbox++;
                             }
 
-                            hashMap.put("Question",question);
-                            hashMap.put("Answer",answer);
-                            hashMap.put("Type",type);
+                            hashMap.put("Question", question);
+                            hashMap.put("Answer", answer);
+                            hashMap.put("Type", type);
 
                             mresponserefernce.child(response_id).child(questiion_id).setValue(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
 
-                                    if(task.isSuccessful())
-                                        Toast.makeText(getApplicationContext(),"Response Recorded",Toast.LENGTH_SHORT).show();
+                                    if (task.isSuccessful())
+                                        Toast.makeText(getApplicationContext(), "Response Recorded", Toast.LENGTH_SHORT).show();
                                     else
-                                        Toast.makeText(getApplicationContext(),"Failed",Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(getApplicationContext(), "Failed", Toast.LENGTH_SHORT).show();
 
                                 }
                             });
