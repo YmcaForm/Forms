@@ -29,7 +29,7 @@
         <activity android:name=".CreateForm"
             android:parentActivityName=".MainActivity"/>
         <activity android:name=".DisplayResponse"
-            android:parentActivityName=".ResponseActivity"/>
+            android:parentActivityName=".ResponseActivity" />
         <activity android:name=".ResponseActivity"
             android:parentActivityName=".MainActivity"/>
         <activity android:name=".UrlActivity">

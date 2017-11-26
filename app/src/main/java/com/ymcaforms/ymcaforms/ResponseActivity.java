@@ -37,9 +37,10 @@ public class ResponseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_response);
 
-        mToolbar = (Toolbar) findViewById(R.id.main_toolbar);
+        mToolbar = (Toolbar) findViewById(R.id.response_toolbar);
         setSupportActionBar(mToolbar);
-        //getSupportActionBar().setTitle("YMCA Forms");
+        getSupportActionBar().setTitle("Responses");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         mAuth = FirebaseAuth.getInstance();
 
