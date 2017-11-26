@@ -66,7 +66,7 @@ public class CreateForm extends AppCompatActivity {
     FirebaseAuth mAuth;
     DatabaseReference mquestiondatabase;
     LinearLayout linearLayout;
-    DatabaseReference mformdatabase,mresponserefernce;
+    DatabaseReference mformdatabase,mresponserefernce,mformreference;
     ArrayList<EditText> allEds=new ArrayList<>();
     ArrayList<RadioGroup> allradiogroup=new ArrayList<>();
     ArrayList<RadioButton> allradio=new ArrayList<>();
@@ -105,10 +105,24 @@ public class CreateForm extends AppCompatActivity {
 
         buo.generateShortUrl(CreateForm.this, lp, new Branch.BranchLinkCreateListener() {
             @Override
-            public void onLinkCreate(String url, BranchError error) {
+            public void onLinkCreate(final String url, BranchError error) {
                 if (error == null) {
                     Log.i("BRANCH SDK", "got my Branch link to share: " + url);
                     tv1.setText(url);
+
+                    Map hashmap=new HashMap();
+                    hashmap.put("url",url);
+                    mformreference=FirebaseDatabase.getInstance().getReference().child("Url").child(userId).child(formId);
+                    mformreference.setValue(hashmap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if(!task.isSuccessful())
+                            {
+                                Toast.makeText(CreateForm.this,"Failes",Toast.LENGTH_SHORT);
+                            }
+                        }
+                    });
+
                 }
             }
         });

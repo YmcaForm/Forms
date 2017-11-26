@@ -1,7 +1,10 @@
 package com.ymcaforms.ymcaforms;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -25,6 +28,17 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
+
+import java.util.Calendar;
+import java.util.Map;
+
+import io.branch.indexing.BranchUniversalObject;
+import io.branch.referral.Branch;
+import io.branch.referral.BranchError;
+import io.branch.referral.SharingHelper;
+import io.branch.referral.util.ContentMetadata;
+import io.branch.referral.util.LinkProperties;
+import io.branch.referral.util.ShareSheetStyle;
 
 public class MainActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
@@ -149,11 +163,131 @@ public class MainActivity extends AppCompatActivity {
                             @Override
                             public void onClick(View view) {
 
+                                CharSequence options[]=new CharSequence[]{"Show Responses", "Share form","Delete Form"};
 
-                                Intent i=new Intent(getApplicationContext(),ResponseActivity.class);
-                                i.putExtra("form_id",list_form_id);
-                                i.putExtra("user_id",list_user_id);
-                                startActivity(i);
+                                AlertDialog.Builder builder=new AlertDialog.Builder(MainActivity.this);
+                                builder.setTitle("Select Options");
+                                builder.setItems(options, new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                                        //Click Events
+
+                                        if(i==0)
+                                        {
+                                            Intent intent=new Intent(getApplicationContext(),ResponseActivity.class);
+                                            intent.putExtra("form_id",list_form_id);
+                                            intent.putExtra("user_id",list_user_id);
+                                             startActivity(intent);
+                                        }
+
+                                        if(i==1)
+                                        {
+                                            DatabaseReference formrefernec=FirebaseDatabase.getInstance().getReference().child("Url").child(list_user_id).child(list_form_id);
+                                            formrefernec.addValueEventListener(new ValueEventListener() {
+                                                @Override
+                                                public void onDataChange(DataSnapshot dataSnapshot) {
+
+                                                    String url=dataSnapshot.child("url").getValue().toString();
+
+                                                    Intent sendIntent = new Intent();
+                                                    sendIntent.setAction(Intent.ACTION_SEND);
+                                                    sendIntent.putExtra(Intent.EXTRA_TEXT,"Ymca forms\n"+ url);
+                                                    sendIntent.setType("text/plain");
+                                                    startActivity(sendIntent);
+
+                                                }
+
+                                                @Override
+                                                public void onCancelled(DatabaseError databaseError) {
+
+                                                }
+                                            });
+                                        }
+
+                                        if(i==2)
+                                        {
+                                            DatabaseReference mformreference=FirebaseDatabase.getInstance().getReference().child("Forms").child(list_user_id).child(list_form_id);
+                                            DatabaseReference mquestionreference=FirebaseDatabase.getInstance().getReference().child("Questions").child(list_form_id);
+                                            DatabaseReference mimagereference=FirebaseDatabase.getInstance().getReference().child("Images").child(list_user_id).child(list_form_id);
+                                            DatabaseReference murlreference=FirebaseDatabase.getInstance().getReference().child("Url").child(list_user_id).child(list_form_id);
+                                            DatabaseReference mresponsereference=FirebaseDatabase.getInstance().getReference().child("Responses").child(list_form_id);
+
+                                            mformreference.addValueEventListener(new ValueEventListener() {
+                                                @Override
+                                                public void onDataChange(DataSnapshot dataSnapshot) {
+
+                                                    dataSnapshot.getRef().removeValue();
+                                                }
+
+                                                @Override
+                                                public void onCancelled(DatabaseError databaseError) {
+
+                                                }
+                                            });
+
+                                            mimagereference.addValueEventListener(new ValueEventListener() {
+                                                @Override
+                                                public void onDataChange(DataSnapshot dataSnapshot) {
+
+                                                    dataSnapshot.getRef().removeValue();
+                                                }
+
+                                                @Override
+                                                public void onCancelled(DatabaseError databaseError) {
+
+                                                }
+                                            });
+
+                                            mquestionreference.addValueEventListener(new ValueEventListener() {
+                                                @Override
+                                                public void onDataChange(DataSnapshot dataSnapshot) {
+
+                                                    dataSnapshot.getRef().removeValue();
+                                                }
+
+                                                @Override
+                                                public void onCancelled(DatabaseError databaseError) {
+
+                                                }
+                                            });
+
+                                            murlreference.addValueEventListener(new ValueEventListener() {
+                                                @Override
+                                                public void onDataChange(DataSnapshot dataSnapshot) {
+
+                                                    dataSnapshot.getRef().removeValue();
+                                                }
+
+                                                @Override
+                                                public void onCancelled(DatabaseError databaseError) {
+
+                                                }
+                                            });
+
+                                            mresponsereference.addValueEventListener(new ValueEventListener() {
+                                                @Override
+                                                public void onDataChange(DataSnapshot dataSnapshot) {
+
+                                                    dataSnapshot.getRef().removeValue();
+                                                }
+
+                                                @Override
+                                                public void onCancelled(DatabaseError databaseError) {
+
+                                                }
+                                            });
+
+                                            Toast.makeText(MainActivity.this,"Form Deleted",Toast.LENGTH_SHORT).show();
+
+                                        }
+
+                                    }
+                                });
+
+
+
+                                builder.show();
 
 
                             }

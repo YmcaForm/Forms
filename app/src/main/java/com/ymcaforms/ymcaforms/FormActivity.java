@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.app.Activity;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -27,7 +28,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class FormActivity extends Activity {
+public class FormActivity extends AppCompatActivity {
     Button mAddButton;
     Button submit;
     EditText formname,formdescription;
@@ -47,8 +48,6 @@ public class FormActivity extends Activity {
         db.delete(getApplicationContext());
 
         mToolbar = (Toolbar) findViewById(R.id.form_toolbar);
-
-
         mAuth = FirebaseAuth.getInstance();
 
         submit=(Button)findViewById(R.id.submit);

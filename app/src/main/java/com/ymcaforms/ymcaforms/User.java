@@ -75,7 +75,7 @@ public class User extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create_form);
+        setContentView(R.layout.activity_user);
 
         userId = getIntent().getStringExtra("user_id");
         formId = getIntent().getStringExtra("form_id");
@@ -129,16 +129,11 @@ public class User extends AppCompatActivity {
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
 
-                            String question = "", type = "", options = "";
+                            String question, type, options ;
                             count++;
 
-                            if (dataSnapshot.child("Question").getValue() != null)
                                 question = snapshot.child("Question").getValue().toString();
-
-                            if (dataSnapshot.child("Type").getValue() != null)
                                 type = snapshot.child("Type").getValue().toString();
-
-                            if (dataSnapshot.child("Options").getValue() != null)
                                 options = snapshot.child("Options").getValue().toString();
 
                             int c = 0;
@@ -247,11 +242,8 @@ public class User extends AppCompatActivity {
                             String questiion_id = snapshot.getKey();
                             System.out.println(questiion_id);
 
-                            String question = "", type = "";
-                            if (dataSnapshot.child("Question").getValue() != null)
+                            String question , type ;
                                 question = snapshot.child("Question").getValue().toString();
-
-                            if (dataSnapshot.child("Type").getValue() != null)
                                 type = snapshot.child("Type").getValue().toString();
 
                             String answer = "";
