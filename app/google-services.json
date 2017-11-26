@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "635455041587",
+    "firebase_url": "https://ymcaforms-441b2.firebaseio.com",
+    "project_id": "ymcaforms-441b2",
+    "storage_bucket": "ymcaforms-441b2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:635455041587:android:8df2add884a12ea7",
+        "android_client_info": {
+          "package_name": "com.ymcaforms.ymcaforms"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "635455041587-a2a2mju0ht11tui10qefvnb6f0rf3gh8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ymcaforms.ymcaforms",
+            "certificate_hash": "889e8c36d17a0303cf1dc6e9ca70d4966b58aced"
+          }
+        },
+        {
+          "client_id": "635455041587-v4829303qbe0dn7fb5affea123dhib2f.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAQ332sEiOKkaBP98Cw8OU0piCL1DaSzSs"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "635455041587-v4829303qbe0dn7fb5affea123dhib2f.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

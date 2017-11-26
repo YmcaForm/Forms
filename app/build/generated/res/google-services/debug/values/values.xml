@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="default_web_client_id" translatable="false">635455041587-v4829303qbe0dn7fb5affea123dhib2f.apps.googleusercontent.com</string>
+    <string name="firebase_database_url" translatable="false">https://ymcaforms-441b2.firebaseio.com</string>
+    <string name="gcm_defaultSenderId" translatable="false">635455041587</string>
+    <string name="google_api_key" translatable="false">AIzaSyAQ332sEiOKkaBP98Cw8OU0piCL1DaSzSs</string>
+    <string name="google_app_id" translatable="false">1:635455041587:android:8df2add884a12ea7</string>
+    <string name="google_crash_reporting_api_key" translatable="false">AIzaSyAQ332sEiOKkaBP98Cw8OU0piCL1DaSzSs</string>
+    <string name="google_storage_bucket" translatable="false">ymcaforms-441b2.appspot.com</string>
+    <string name="project_id" translatable="false">ymcaforms-441b2</string>
+</resources>
