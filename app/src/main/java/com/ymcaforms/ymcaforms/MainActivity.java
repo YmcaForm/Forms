@@ -196,7 +196,7 @@ public class MainActivity extends AppCompatActivity {
 
             ImageView iv=mview.findViewById(R.id.previous_form_image);
             System.out.print("hlo");
-           // Picasso.with(mview.getContext()).load(image).into(iv);
+            Picasso.with(mview.getContext()).load(image).into(iv);
         }
     }
 }
