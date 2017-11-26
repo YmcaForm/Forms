@@ -61,7 +61,7 @@ public class UpdateQuestionFragment extends DialogFragment implements AdapterVie
         count=mQuestion.getCount();
         maddoptions=(Button)rootView.findViewById(R.id.update_options);
 
-        ArrayAdapter<String> adap=new ArrayAdapter<String>(getContext(),android.R.layout.simple_dropdown_item_1line,arr);
+        ArrayAdapter<String> adap = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_dropdown_item_1line, arr);
         sp.setAdapter(adap);
         sp.setOnItemSelectedListener(this);
 
@@ -91,7 +91,7 @@ public class UpdateQuestionFragment extends DialogFragment implements AdapterVie
 
         for(int j=0; j<option.size(); j++)
         {
-            EditText editText= new EditText(getContext());
+            EditText editText = new EditText(getActivity());
             editText.setLayoutParams(new LinearLayout.LayoutParams(
                     ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT));
             editText.setId(j+1);
@@ -103,7 +103,7 @@ public class UpdateQuestionFragment extends DialogFragment implements AdapterVie
             public void onClick(View view) {
 
                 count++;
-                EditText t = new EditText(getContext());
+                EditText t = new EditText(getActivity());
                 t.setHint("Option");
                 t.setId(count);
                 t.setLayoutParams(new LinearLayoutCompat.LayoutParams(LinearLayoutCompat.LayoutParams.MATCH_PARENT, LinearLayoutCompat.LayoutParams.MATCH_PARENT));

@@ -35,7 +35,7 @@ public class AddQuestionFragment extends DialogFragment implements AdapterView.O
         addoptions=(Button)rootView.findViewById(R.id.add_options);
         linearLayout=(LinearLayout)rootView.findViewById(R.id.add_fragment);
         sp=(Spinner)rootView.findViewById(R.id.add_spinner);
-        ArrayAdapter<String> adap=new ArrayAdapter<String>(getContext(),android.R.layout.simple_dropdown_item_1line,arr);
+        ArrayAdapter<String> adap = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_dropdown_item_1line, arr);
         sp.setAdapter(adap);
         sp.setOnItemSelectedListener(this);
         mSubmitButton = (Button) rootView.findViewById(R.id.add_submit);
@@ -45,7 +45,7 @@ public class AddQuestionFragment extends DialogFragment implements AdapterView.O
             public void onClick(View view) {
 
                 count++;
-                EditText t = new EditText(getContext());
+                EditText t = new EditText(getActivity());
                 t.setHint("Option");
                 t.setId(count);
                 t.setLayoutParams(new LinearLayoutCompat.LayoutParams(LinearLayoutCompat.LayoutParams.MATCH_PARENT, LinearLayoutCompat.LayoutParams.WRAP_CONTENT));

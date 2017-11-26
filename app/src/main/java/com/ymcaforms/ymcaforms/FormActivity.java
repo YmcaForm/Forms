@@ -48,6 +48,10 @@ public class FormActivity extends AppCompatActivity {
         db.delete(getApplicationContext());
 
         mToolbar = (Toolbar) findViewById(R.id.form_toolbar);
+        setSupportActionBar(mToolbar);
+        getSupportActionBar().setTitle("Create Form");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         mAuth = FirebaseAuth.getInstance();
 
         submit=(Button)findViewById(R.id.submit);
