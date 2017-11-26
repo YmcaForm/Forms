@@ -114,8 +114,12 @@ public class MainActivity extends AppCompatActivity {
                     public void onDataChange(DataSnapshot dataSnapshot) {
 
 
-                        String name=dataSnapshot.child("form_name").getValue().toString();
-                        String description=dataSnapshot.child("form_description").getValue().toString();
+                        String name="",description="";
+                        if(dataSnapshot.child("form_name").getValue()!=null)
+                         name=dataSnapshot.child("form_name").getValue().toString();
+
+                        if(dataSnapshot.child("form_description").getValue()!=null)
+                         description=dataSnapshot.child("form_description").getValue().toString();
 
                         DatabaseReference imagerefernece=FirebaseDatabase.getInstance().getReference().child("Images").child(list_user_id);
                         imagerefernece.child(list_form_id).addValueEventListener(new ValueEventListener() {
@@ -124,7 +128,9 @@ public class MainActivity extends AppCompatActivity {
 
                                 if(dataSnapshot.child("image").getValue()!=null) {
 
-                                    String image = dataSnapshot.child("image").getValue().toString();
+                                    String image="";
+                                    if(dataSnapshot.child("image").getValue()!=null)
+                                     image = dataSnapshot.child("image").getValue().toString();
                                     System.out.println(image);
                                     viewHolder.setimage(image);
                                 }
