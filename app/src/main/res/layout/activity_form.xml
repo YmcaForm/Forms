@@ -56,8 +56,6 @@
             />
 
     </RelativeLayout>
-    =
-
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_below="@id/relative1"
