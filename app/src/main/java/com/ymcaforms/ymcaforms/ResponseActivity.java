@@ -43,7 +43,11 @@ public class ResponseActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
 
-        String current_userid = mAuth.getCurrentUser().getUid();
+        String current_userid="";
+
+        if(mAuth.getCurrentUser()!=null)
+         current_userid=mAuth.getCurrentUser().getUid();
+
         final String form_id = getIntent().getStringExtra("form_id");
 
         response = (RecyclerView) findViewById(R.id.response_recyler_view);
@@ -81,9 +85,6 @@ public class ResponseActivity extends AppCompatActivity {
                                 for(DataSnapshot snapshot : dataSnapshot.getChildren()){
 
                                     String id = snapshot.getKey();
-                                    String question = snapshot.child("Question").getValue().toString();
-                                    String answer = snapshot.child("Answer").getValue().toString();
-
                                     System.out.println(form_id + " " + list_form_id+" " + id);
 
                                     Intent displayResponse = new Intent(ResponseActivity.this, DisplayResponse.class);

@@ -99,8 +99,13 @@ public class User extends AppCompatActivity{
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                String form_name=dataSnapshot.child("form_name").getValue().toString();
-                String form_description=dataSnapshot.child("form_description").getValue().toString();
+                String form_name="",form_description="";
+
+                if(dataSnapshot.child("form_name").getValue()!=null)
+                form_name=dataSnapshot.child("form_name").getValue().toString();
+
+                if(dataSnapshot.child("form_description").getValue()!=null)
+                form_description=dataSnapshot.child("form_description").getValue().toString();
 
                 TextView textView= new TextView(getApplicationContext());
                 LinearLayout.LayoutParams layoutParams=new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -123,10 +128,17 @@ public class User extends AppCompatActivity{
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         for (DataSnapshot snapshot: dataSnapshot.getChildren()) {
 
+                            String question="",type="",options="";
                             count++;
-                            String question=snapshot.child("Question").getValue().toString();
-                            String type=snapshot.child("Type").getValue().toString();
-                            String options=snapshot.child("Options").getValue().toString();
+
+                            if(dataSnapshot.child("Question").getValue()!=null)
+                            question=snapshot.child("Question").getValue().toString();
+
+                            if(dataSnapshot.child("Type").getValue()!=null)
+                            type=snapshot.child("Type").getValue().toString();
+
+                            if(dataSnapshot.child("Options").getValue()!=null)
+                            options=snapshot.child("Options").getValue().toString();
 
                             int c=0;
                             String s="";
@@ -241,8 +253,13 @@ public class User extends AppCompatActivity{
                             HashMap<String,String> hashMap=new HashMap<>();
                             String questiion_id=snapshot.getKey();
                             System.out.println(questiion_id);
-                            String question=snapshot.child("Question").getValue().toString();
-                            String type=snapshot.child("Type").getValue().toString();
+
+                            String question="",type="";
+                            if(dataSnapshot.child("Question").getValue()!=null)
+                            question=snapshot.child("Question").getValue().toString();
+
+                            if(dataSnapshot.child("Type").getValue()!=null)
+                            type=snapshot.child("Type").getValue().toString();
 
                             String answer="";
 
