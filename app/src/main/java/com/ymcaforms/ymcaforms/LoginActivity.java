@@ -9,6 +9,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -39,6 +40,7 @@ public class LoginActivity extends AppCompatActivity {
     private ProgressDialog mProgressDialog;
     private TextView forgot;
     private GoogleSignInClient mGoogleSignInClient;
+    private Toolbar mToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +48,9 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         mAuth = FirebaseAuth.getInstance();
 
+        mToolbar = (Toolbar) findViewById(R.id.login_toolbar);
+        setSupportActionBar(mToolbar);
+        getSupportActionBar().setTitle("Login");
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
