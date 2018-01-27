@@ -1,13 +1,18 @@
 package com.ymcaforms.ymcaforms;
 
+import android.annotation.SuppressLint;
+import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.AppCompatCheckBox;
+import android.support.v7.widget.AppCompatRadioButton;
 import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.util.TypedValue;
@@ -64,13 +69,14 @@ public class User extends AppCompatActivity {
     ArrayList<CheckBox> allcheck = new ArrayList<>();
     ArrayList<Integer> radiocount = new ArrayList<>();
     ArrayList<Integer> checkcount = new ArrayList<>();
+    ArrayList<LinearLayout> linearLayouts=new ArrayList<>();
     StorageReference mimagereference;
     TextView tv1;
     Button b;
     ImageView iv;
     CardView cd;
     TextView tv;
-    int count = 0, question = 0, text = 0, radiogroup = 0, radio = 0, check = 0, checkbox = 0;
+    int count = 0, question = 0, text = 0, radiogroup = 0, radio = 0, check = 0, checkbox = 0,k=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,23 +114,34 @@ public class User extends AppCompatActivity {
                 if (dataSnapshot.child("form_description").getValue() != null)
                     form_description = dataSnapshot.child("form_description").getValue().toString();
 
+                LinearLayout linearLayout1=new LinearLayout(getApplicationContext());
+                linearLayout1.setOrientation(LinearLayout.VERTICAL);
+                LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                layoutParams.setMargins(0,70,0,0);
+                linearLayout1.setLayoutParams(layoutParams);
+
+
                 TextView textView = new TextView(getApplicationContext());
-                LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                layoutParams.weight = 1;
+                layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                 textView.setLayoutParams(layoutParams);
                 textView.setText(form_name);
                 textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 28f);
                 textView.setTextColor(getResources().getColor(R.color.black));
-                linearLayout.addView(textView);
+                linearLayout1.addView(textView);
 
                 TextView textView1 = new TextView(getApplicationContext());
+                layoutParams.setMargins(0,20,0,0);
                 textView.setLayoutParams(layoutParams);
                 textView1.setText(form_description);
                 textView1.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16f);
                 textView1.setTextColor(getResources().getColor(R.color.black));
-                linearLayout.addView(textView1);
+                linearLayout1.addView(textView1);
+
+                linearLayout.addView(linearLayout1);
+                linearLayouts.add(linearLayout1);
 
                 mquestiondatabase.addValueEventListener(new ValueEventListener() {
+                    @SuppressLint("RestrictedApi")
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
@@ -149,40 +166,49 @@ public class User extends AppCompatActivity {
                                     s = s + options.charAt(j);
                             }
 
+                            LinearLayout linearLayout2=new LinearLayout(getApplicationContext());
+                            linearLayout2.setOrientation(LinearLayout.VERTICAL);
+                            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                            layoutParams.setMargins(0,30,0,30);
+                            linearLayout2.setLayoutParams(layoutParams);
+
                             TextView textView = new TextView(getApplicationContext());
-                            RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                            layoutParams.setMargins(0, 60, 0, 0);
+                            layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                            layoutParams.setMargins(0, 100, 0, 0);
                             textView.setTextColor(getResources().getColor(R.color.black));
                             textView.setLayoutParams(layoutParams);
 
                             textView.setText(question);
                             textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18f);
-                            linearLayout.addView(textView);
+                            linearLayout2.addView(textView);
 
                             if (type.equals("Text")) {
                                 EditText ed = new EditText(getApplicationContext());
-                                layoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                                layoutParams.setMargins(0, 20, 0, 0);
+                                layoutParams=new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                                layoutParams.setMargins(0, 30, 0, 0);
                                 ed.setLayoutParams(layoutParams);
                                 allEds.add(ed);
                                 ed.setHint("Your Answer");
+                                ed.getBackground().setColorFilter(getResources().getColor(R.color.black), PorterDuff.Mode.SRC_IN);
                                 ed.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14f);
                                 ed.setTextColor(getResources().getColor(R.color.black));
-                                linearLayout.addView(ed);
+                                linearLayout2.addView(ed);
                             }
 
                             if (type.equals("Radio Button")) {
                                 RadioGroup rg = new RadioGroup(getApplicationContext());
-                                layoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                                layoutParams.setMargins(0, 20, 0, 0);
+                                layoutParams.setMargins(0, 30, 0, 0);
                                 rg.setLayoutParams(layoutParams);
                                 allradiogroup.add(rg);
 
 
                                 for (int i = 0; i < option.size(); i++) {
                                     RadioButton rb = new RadioButton(getApplicationContext());
-                                    layoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                                    layoutParams.setMargins(0, 15, 0, 0);
+                                    int color=Color.parseColor("#000000");
+                                    rb.setButtonTintList(ColorStateList.valueOf(color));
+                                    int color1=Color.parseColor("#FFC0CB");
+                                    rb.setHighlightColor(color1);
+                                    layoutParams.setMargins(0, 10, 0, 0);
                                     rb.setLayoutParams(layoutParams);
                                     allradio.add(rb);
                                     rb.setText(option.get(i));
@@ -191,23 +217,26 @@ public class User extends AppCompatActivity {
                                 }
 
                                 radiocount.add(option.size());
-                                linearLayout.addView(rg);
+                                linearLayout2.addView(rg);
                             }
 
                             if (type.equals("Check Box")) {
                                 for (int i = 0; i < option.size(); i++) {
                                     CheckBox cb = new CheckBox(getApplicationContext());
-                                    layoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                                    int color=Color.parseColor("#000000");
+                                    cb.setButtonTintList(ColorStateList.valueOf(color));
                                     layoutParams.setMargins(0, 10, 0, 0);
                                     cb.setLayoutParams(layoutParams);
                                     cb.setText(option.get(i));
                                     cb.setTextColor(getResources().getColor(R.color.black));
                                     allcheck.add(cb);
-                                    linearLayout.addView(cb);
+                                    linearLayout2.addView(cb);
                                 }
 
                                 checkcount.add(option.size());
                             }
+
+                            linearLayout.addView(linearLayout2);
                         }
                     }
 

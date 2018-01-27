@@ -5,7 +5,7 @@
     android:versionName="1.0" >
 
     <uses-sdk
-        android:minSdkVersion="23"
+        android:minSdkVersion="21"
         android:targetSdkVersion="26" />
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -39,7 +39,9 @@
         </activity>
         <activity android:name="com.ymcaforms.ymcaforms.MainActivity" />
         <activity android:name="com.ymcaforms.ymcaforms.LoginActivity" />
-        <activity android:name="com.ymcaforms.ymcaforms.RegisterActivity" />
+        <activity
+            android:name="com.ymcaforms.ymcaforms.RegisterActivity"
+            android:parentActivityName="com.ymcaforms.ymcaforms.LoginActivity" />
         <activity
             android:name="com.ymcaforms.ymcaforms.FormActivity"
             android:parentActivityName="com.ymcaforms.ymcaforms.MainActivity" />

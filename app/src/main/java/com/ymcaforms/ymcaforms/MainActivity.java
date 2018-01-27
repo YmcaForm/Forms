@@ -3,7 +3,10 @@ package com.ymcaforms.ymcaforms;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.NavigationView;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -46,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private FloatingActionButton addForm;
     private DatabaseReference mformreference;
+    private DrawerLayout mdrawerlayout;
 
 
     @Override
@@ -59,10 +63,9 @@ public class MainActivity extends AppCompatActivity {
         if(mAuth.getCurrentUser()!=null)
             user_id = mAuth.getCurrentUser().getUid();
 
+        configureNavigationDrawer();
+        configureToolbar();
         mformreference= FirebaseDatabase.getInstance().getReference().child("Forms").child(user_id);
-        mToolbar = (Toolbar) findViewById(R.id.main_toolbar);
-        setSupportActionBar(mToolbar);
-        getSupportActionBar().setTitle("YMCA Forms");
 
         recyclerView=(RecyclerView)findViewById(R.id.recyler_view);
         recyclerView.setHasFixedSize(true);
@@ -83,6 +86,35 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.mainactivity_menus, menu);
         return super.onCreateOptionsMenu(menu);
+    }
+
+    private void configureToolbar() {
+        Toolbar toolbar = (Toolbar) findViewById(R.id.main_toolbar);
+        setSupportActionBar(toolbar);
+        ActionBar actionbar = getSupportActionBar();
+        actionbar.setTitle("YMCA Forms");
+        actionbar.setHomeAsUpIndicator(R.drawable.common_google_signin_btn_icon_dark_normal);
+        actionbar.setDisplayHomeAsUpEnabled(true);
+    }
+
+    private void configureNavigationDrawer() {
+        mdrawerlayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        NavigationView navView = (NavigationView) findViewById(R.id.navigation);
+        navView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(MenuItem menuItem) {
+
+                int itemId = menuItem.getItemId();
+
+                if (itemId == R.id.refresh) {
+                    Toast.makeText(getApplicationContext(),"yoyo",Toast.LENGTH_SHORT).show();
+                } else if (itemId == R.id.stop) {
+                    Toast.makeText(getApplicationContext(),"lelo",Toast.LENGTH_SHORT).show();
+                }
+
+                return false;
+            }
+        });
     }
 
     @Override
